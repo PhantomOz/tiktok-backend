@@ -20,7 +20,13 @@ app.get('/', (req, res) => {
 });
 
 app.get('/v2/api/vid123/', (req, res) => {
-    res.status(200).send(Data);
+    Videos.find((err, data) => {
+        if(err){
+            res.status(500).send("error >>", err);
+        }else{
+            res.status(200).send(data);
+        }
+    })
 });
 
 app.post('/v2/api/vid123/', (req, res) => {
@@ -36,6 +42,7 @@ app.post('/v2/api/vid123/', (req, res) => {
     
 });
 
-app.listen(3200, () => {
-    console.log(`Server started on 3200`);
+const PORT = process.env.PORT || 3200;
+app.listen(PORT, () => {
+    console.log(`Server started on ${PORT}`);
 });
